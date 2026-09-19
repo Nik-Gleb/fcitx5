@@ -21,7 +21,7 @@ jobs:
           sudo apt-get update
 
       - name: Install build dependencies
-        run: sudo apt-get build-dep -y .
+        run: sudo apt-get build-dep -y fcitx5
 
       - name: Configure
         run: cmake -G Ninja -S . -B build
