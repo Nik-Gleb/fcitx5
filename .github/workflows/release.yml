@@ -35,7 +35,12 @@ jobs:
             wayland-protocols
 
       - name: Configure
-        run: cmake -G Ninja -S . -B build
+        run: |
+          cmake -G Ninja -S . -B build \
+            -DCMAKE_BUILD_TYPE=MinSizeRel \
+            -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
+            -DCMAKE_CXX_FLAGS="-ffunction-sections -fdata-sections" \
+            -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--gc-sections"
 
       - name: Build
         run: cmake --build build --target Fcitx5Utils
@@ -48,6 +53,7 @@ jobs:
           libdir="$pkgroot/usr/lib/x86_64-linux-gnu"
           mkdir -p "$libdir" "$pkgroot/DEBIAN"
           install -m644 build/bin/libFcitx5Utils.so.5.1.22 "$libdir/"
+          strip --strip-unneeded "$libdir/libFcitx5Utils.so.5.1.22"
           ln -s libFcitx5Utils.so.5.1.22 "$libdir/libFcitx5Utils.so.2"
           size="$(du -sk "$pkgroot" | cut -f1)"
           cat > "$pkgroot/DEBIAN/control" <<EOF
