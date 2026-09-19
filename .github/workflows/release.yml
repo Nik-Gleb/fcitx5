@@ -37,6 +37,7 @@ jobs:
       - name: Configure
         run: |
           cmake -G Ninja -S . -B build \
+            -DCMAKE_INSTALL_PREFIX=/usr \
             -DCMAKE_BUILD_TYPE=MinSizeRel \
             -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
             -DCMAKE_CXX_FLAGS="-ffunction-sections -fdata-sections" \
