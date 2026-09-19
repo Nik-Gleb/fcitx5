@@ -21,7 +21,9 @@ jobs:
           sudo apt-get update
 
       - name: Install build dependencies
-        run: sudo apt-get build-dep -y fcitx5
+        run: |
+          sudo apt-get build-dep -y fcitx5
+          sudo apt-get install -y nlohmann-json3-dev
 
       - name: Configure
         run: cmake -G Ninja -S . -B build
